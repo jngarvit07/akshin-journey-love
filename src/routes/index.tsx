@@ -9,6 +9,9 @@ import y3 from "@/assets/y3.jpg";
 import y4 from "@/assets/y4.jpg";
 import y5 from "@/assets/y5.jpg";
 import rose from "@/assets/rose.jpg";
+import h1 from "@/assets/h1.jpg";
+import h2 from "@/assets/h2.jpg";
+import h3 from "@/assets/h3.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -315,7 +318,7 @@ function TimelineRow({ item, index }: { item: (typeof timeline)[number]; index: 
 
 /* ---------------- Gallery ---------------- */
 function Gallery() {
-  const imgs = [hero, y1, y2, y3, y4, y5, rose];
+  const imgs = [hero, h1, y1, h2, y2, y3, h3, y4, y5, rose];
   const [active, setActive] = useState<number | null>(null);
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-24">
