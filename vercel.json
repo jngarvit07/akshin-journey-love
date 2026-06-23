@@ -3,7 +3,13 @@
   "devCommand": "bun run dev",
   "installCommand": "bun install",
   "framework": "vite",
-  "outputDirectory": "dist/client",
+  "outputDirectory": "dist/server",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
   "env": {
     "NODE_ENV": "production"
   }
