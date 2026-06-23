@@ -221,14 +221,23 @@ function useCountdown(target: Date) {
 }
 
 function Countdown() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const { d, h, m, s, passed } = useCountdown(TARGET);
   const label = passed ? "Our day is here" : "Until our 5th anniversary";
-  const items = [
-    { v: d, l: "Days" },
-    { v: h, l: "Hours" },
-    { v: m, l: "Minutes" },
-    { v: s, l: "Seconds" },
-  ];
+  const items = mounted
+    ? [
+        { v: d, l: "Days" },
+        { v: h, l: "Hours" },
+        { v: m, l: "Minutes" },
+        { v: s, l: "Seconds" },
+      ]
+    : [
+        { v: 0, l: "Days" },
+        { v: 0, l: "Hours" },
+        { v: 0, l: "Minutes" },
+        { v: 0, l: "Seconds" },
+      ];
   return (
     <section id="story" className="relative z-10 mx-auto max-w-5xl px-6 py-24 text-center">
       <p className="mb-3 text-xs uppercase tracking-[0.4em] text-rose-gold">{label}</p>
