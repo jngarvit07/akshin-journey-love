@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
@@ -12,16 +11,6 @@ import rose from "@/assets/rose.jpg";
 import h1 from "@/assets/h1.jpg";
 import h2 from "@/assets/h2.jpg";
 import h3 from "@/assets/h3.jpg";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Akshin — 5 Years of Us" },
-      { name: "description", content: "A cinematic anniversary memory: 25 June 2021 — 25 June 2026." },
-    ],
-  }),
-  component: Akshin,
-});
 
 const START = new Date("2021-06-25T00:00:00");
 const TARGET = new Date("2026-06-25T00:00:00");
@@ -42,7 +31,7 @@ const moments = [
   { date: "Jun 25, 2026", title: "5 Years", text: "And this is only the beginning." },
 ];
 
-function Akshin() {
+function App() {
   return (
     <main className="bg-stage relative min-h-screen text-foreground">
       <CursorGlow />
@@ -63,7 +52,6 @@ function Akshin() {
   );
 }
 
-/* ---------------- Cursor Glow ---------------- */
 function CursorGlow() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -78,7 +66,6 @@ function CursorGlow() {
   return <div ref={ref} className="cursor-glow hidden md:block" />;
 }
 
-/* ---------------- Particles ---------------- */
 function Particles() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -113,7 +100,6 @@ function Particles() {
   );
 }
 
-/* ---------------- Hero ---------------- */
 function Hero() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 0.2], [0, 80]);
@@ -156,7 +142,6 @@ function Hero() {
           <span className="mx-3 text-soft-pink">&amp;</span>
           <span className="text-gold">Kinshu</span>
         </motion.p>
-
 
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
@@ -208,7 +193,6 @@ function Hero() {
   );
 }
 
-/* ---------------- Countdown ---------------- */
 function useCountdown(target: Date) {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
@@ -260,7 +244,6 @@ function Countdown() {
   );
 }
 
-/* ---------------- Timeline ---------------- */
 function Timeline() {
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-24">
@@ -294,7 +277,6 @@ function TimelineRow({ item, index }: { item: (typeof timeline)[number]; index: 
         <div className="text-rose-gold font-serif text-6xl leading-none opacity-80">{item.year}</div>
         <h3 className="text-gold mt-2 font-serif text-3xl">{item.title}</h3>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:ml-auto md:max-w-sm">
-          {isRight ? "" : null}
           {item.text}
         </p>
       </div>
@@ -316,7 +298,6 @@ function TimelineRow({ item, index }: { item: (typeof timeline)[number]; index: 
   );
 }
 
-/* ---------------- Gallery ---------------- */
 function Gallery() {
   const imgs = [hero, h1, y1, h2, y2, y3, h3, y4, y5, rose];
   const [active, setActive] = useState<number | null>(null);
@@ -369,7 +350,6 @@ function Gallery() {
   );
 }
 
-/* ---------------- Moments ---------------- */
 function Moments() {
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-24">
@@ -396,7 +376,6 @@ function Moments() {
   );
 }
 
-/* ---------------- Stats ---------------- */
 function AnimatedNumber({ to }: { to: number }) {
   const [n, setN] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -460,7 +439,6 @@ function Stats() {
   );
 }
 
-/* ---------------- Letter ---------------- */
 const LETTER = `My dearest,
 
 Five years ago, on a quiet June day, the world handed me you — and nothing has been ordinary since. You are my favorite sentence in every story, the warmth in every winter, the song I never want to end.
@@ -523,7 +501,6 @@ function Letter() {
   );
 }
 
-/* ---------------- Music Player ---------------- */
 function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
   const [vol, setVol] = useState(0.5);
@@ -580,7 +557,6 @@ function MusicPlayer() {
   );
 }
 
-/* ---------------- Final Section ---------------- */
 function FinalSection() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -626,7 +602,7 @@ function FinalSection() {
         className="relative z-10 px-6"
       >
         <p className="font-serif text-xl italic text-foreground/80 sm:text-2xl">
-          “These 5 years were my favorite chapter.”
+          "These 5 years were my favorite chapter."
         </p>
         <h2 className="text-gold mx-auto mt-8 max-w-3xl font-serif text-4xl leading-tight sm:text-6xl">
           And this is only the beginning <span className="text-soft-pink">♥</span>
@@ -642,7 +618,6 @@ function FinalSection() {
   );
 }
 
-/* ---------------- Heading ---------------- */
 function Heading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="text-center">
@@ -668,3 +643,5 @@ function Heading({ eyebrow, title }: { eyebrow: string; title: string }) {
     </div>
   );
 }
+
+export default App;
