@@ -54,7 +54,7 @@ function Akshin() {
       <MusicPlayer />
       <FinalSection />
       <footer className="relative z-10 py-10 text-center text-xs text-muted-foreground">
-        Made with <span className="text-soft-pink">♥</span> for Akshin · 25.06.2021 — 25.06.2026
+        Made with <span className="text-soft-pink">♥</span> · Anish &amp; Kinshu · 25.06.2021 — 25.06.2026
       </footer>
     </main>
   );
@@ -478,9 +478,9 @@ function Letter() {
         <button onClick={() => setOpen(true)} className="group" aria-label="Open the letter">
           <div className={`envelope ${open ? "open" : ""} transition-transform group-hover:-translate-y-1`}>
             <div className="envelope-flap" />
-            <div className="envelope-seal">A</div>
+            <div className="envelope-seal">A&amp;K</div>
             <div className="absolute inset-x-6 bottom-6 top-12 rounded-md bg-[#f8f2ea] p-4 text-left text-[10px] leading-relaxed text-[#3a2a22] shadow-inner">
-              <div className="font-serif text-base">To Akshin</div>
+              <div className="font-serif text-base">Anish &amp; Kinshu</div>
               <div className="shimmer my-2" />
               <div className="opacity-70">Five years. Infinite love.</div>
             </div>
