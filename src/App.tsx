@@ -18,6 +18,8 @@ import audio from "@/assets/Audio_1.mp3";
 
 const START = new Date("2021-06-25T00:00:00");
 const TARGET = new Date("2026-06-25T00:00:00");
+// EDITABLE: Change this to control when all sections unlock
+const UNLOCK_TIME = new Date("2026-06-24T23:59:59");
 
 const timeline = [
   {
@@ -92,25 +94,163 @@ const moments = [
 ];
 
 function App() {
+  const [unlocked, setUnlocked] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const isTimeUnlocked = mounted && new Date() >= UNLOCK_TIME;
+  const shouldShowContent = unlocked || isTimeUnlocked;
+
   return (
     <main className="bg-stage relative min-h-screen text-foreground">
       <CursorGlow />
       <Particles />
       <Hero />
       <Countdown />
-      <Timeline />
-      <Gallery />
-      <Moments />
-      <Stats />
-      <Letter />
-      <LoveBurst />
-      <MusicPlayer />
-      <FinalSection />
+
+      {shouldShowContent ? (
+        <>
+          <Timeline />
+          <Gallery />
+          <Moments />
+          <Stats />
+          <Letter />
+          <LoveBurst />
+          <MusicPlayer />
+          <FinalSection />
+        </>
+      ) : (
+        <SurpriseGate onUnlock={() => setUnlocked(true)} timeUntilUnlock={UNLOCK_TIME} />
+      )}
+
       <footer className="relative z-10 py-10 text-center text-xs text-muted-foreground">
         Made with <span className="text-soft-pink">♥</span> · Anish &amp; Kinshu · 25.06.2021 —
         25.06.2026
       </footer>
     </main>
+  );
+}
+
+function SurpriseGate({
+  onUnlock,
+  timeUntilUnlock,
+}: {
+  onUnlock: () => void;
+  timeUntilUnlock: Date;
+}) {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const diff = timeUntilUnlock.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, [timeUntilUnlock]);
+
+  return (
+    <section className="relative z-10 mx-auto max-w-6xl px-6 py-24 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <Heading eyebrow="The Moment Approaches" title="Your Surprise Awaits" />
+
+        {/* Unlock Timer */}
+        {timeLeft.days > 0 || timeLeft.hours > 0 || timeLeft.minutes > 0 || timeLeft.seconds > 0 ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-12 glass mx-auto inline-flex flex-wrap items-center justify-center gap-4 px-6 py-8 sm:gap-8 sm:px-10"
+          >
+            <div className="min-w-[60px] sm:min-w-[80px]">
+              <div className="text-gold font-serif text-3xl font-light sm:text-5xl">
+                {String(timeLeft.days).padStart(2, "0")}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground sm:text-xs">
+                Days
+              </div>
+            </div>
+            <div className="text-rose-gold text-xl">:</div>
+            <div className="min-w-[60px] sm:min-w-[80px]">
+              <div className="text-gold font-serif text-3xl font-light sm:text-5xl">
+                {String(timeLeft.hours).padStart(2, "0")}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground sm:text-xs">
+                Hours
+              </div>
+            </div>
+            <div className="text-rose-gold text-xl">:</div>
+            <div className="min-w-[60px] sm:min-w-[80px]">
+              <div className="text-gold font-serif text-3xl font-light sm:text-5xl">
+                {String(timeLeft.minutes).padStart(2, "0")}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground sm:text-xs">
+                Minutes
+              </div>
+            </div>
+            <div className="text-rose-gold text-xl">:</div>
+            <div className="min-w-[60px] sm:min-w-[80px]">
+              <div className="text-gold font-serif text-3xl font-light sm:text-5xl">
+                {String(timeLeft.seconds).padStart(2, "0")}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground sm:text-xs">
+                Seconds
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-12 font-serif text-2xl text-soft-pink"
+          >
+            ✨ The time has arrived! ✨
+          </motion.p>
+        )}
+
+        {/* Unlock Button */}
+        <motion.button
+          onClick={onUnlock}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          className="glow-ring mt-10 rounded-full border border-rose-gold/50 bg-background/40 px-8 py-4 text-lg font-serif italic tracking-wide backdrop-blur-md transition-colors hover:bg-rose-gold/20"
+        >
+          🎁 Open Your Surprise 🎁
+        </motion.button>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="mt-6 text-sm text-muted-foreground"
+        >
+          Click the button or wait until {UNLOCK_TIME.toLocaleDateString()} at{" "}
+          {UNLOCK_TIME.toLocaleTimeString()} to unlock all the memories
+        </motion.p>
+      </motion.div>
+    </section>
   );
 }
 
