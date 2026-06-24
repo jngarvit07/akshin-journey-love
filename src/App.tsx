@@ -7,6 +7,7 @@ import y2 from "@/assets/y2.jpg";
 import y3 from "@/assets/y3.jpg";
 import y4 from "@/assets/y4.jpg";
 import y5 from "@/assets/y5.jpg";
+import y6 from "@/assets/y6.jpg";
 import rose from "@/assets/rose.jpg";
 import h1 from "@/assets/h1.jpg";
 import h2 from "@/assets/h2.jpg";
@@ -42,9 +43,15 @@ const timeline = [
   },
   {
     year: "2025",
+    title: "The Beginning of Always",
+    text: "A year of discovering each other deeper, creating memories, and turning moments into something unforgettable.",
+    img: y5,
+  },
+  {
+    year: "2026",
     title: "Forever, In Progress",
     text: "Promises whispered, dreams shared, a future we are quietly building.",
-    img: y5,
+    img: y6,
   },
 ];
 
@@ -283,7 +290,7 @@ function Countdown() {
 function Timeline() {
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-24">
-      <Heading eyebrow="Our Journey" title="A Love Story in Five Chapters" />
+      <Heading eyebrow="Our Journey" title="A Love Story in Five Chapters… and Forever" />
       <div className="relative mt-16">
         <div
           className="absolute left-4 top-0 h-full w-px md:left-1/2"
@@ -309,14 +316,12 @@ function TimelineRow({ item, index }: { item: (typeof timeline)[number]; index: 
       transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
       className={`relative grid items-center gap-8 md:grid-cols-2 ${isRight ? "md:[&>*:first-child]:order-2" : ""}`}
     >
-      <div className={`pl-12 md:pl-0 ${isRight ? "md:pl-12" : "md:pr-12 md:text-right"}`}>
+      <div className="pl-12 md:pl-0">
         <div className="text-rose-gold font-serif text-6xl leading-none opacity-80">
           {item.year}
         </div>
         <h3 className="text-gold mt-2 font-serif text-3xl">{item.title}</h3>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:ml-auto md:max-w-sm">
-          {item.text}
-        </p>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">{item.text}</p>
       </div>
 
       <motion.div
