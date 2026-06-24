@@ -747,7 +747,7 @@ function LoveBurst() {
               <motion.div
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="absolute inset-0 flex items-center justify-center"
+                className="absolute inset-0 z-20 flex items-center justify-center"
               >
                 <div className="text-center">
                   <h2 className="font-serif text-4xl sm:text-5xl font-light text-soft-pink mb-2">
