@@ -60,31 +60,26 @@ const moments = [
     date: "Jun 25, 2021",
     title: "First Hello",
     text: "The day everything began.",
-    video: undefined,
   },
   {
     date: "Dec 31, 2022",
     title: "Our First New Year",
     text: "Midnight kisses under city lights.",
-    video: undefined,
   },
   {
     date: "Aug 14, 2023",
     title: "The Mountain Trip",
     text: "Where we left our hearts above the clouds.",
-    video: undefined,
   },
   {
     date: "Feb 14, 2024",
     title: "Letters & Roses",
     text: "A quiet Valentine that meant everything.",
-    video: undefined,
   },
   {
     date: "Jun 25, 2026",
     title: "5 Years",
     text: "And this is only the beginning.",
-    video: undefined,
   },
 ];
 
@@ -373,34 +368,24 @@ function TimelineRow({ item, index }: { item: (typeof timeline)[number]; index: 
 }
 
 function Gallery() {
-  const imgs = [hero, h1, y1, y2, y3, y4, y5, y6, rose];
+  const galleryItems = [
+    { src: hero, video: undefined },
+    { src: h1, video: undefined },
+    { src: y1, video: undefined },
+    { src: y2, video: undefined },
+    { src: y3, video: undefined },
+    { src: y4, video: undefined },
+    { src: y5, video: undefined },
+    { src: y6, video: undefined },
+    { src: rose, video: undefined },
+  ];
   const [active, setActive] = useState<number | null>(null);
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-24">
       <Heading eyebrow="Memory Gallery" title="Moments We Keep Forever" />
       <div className="mt-12 columns-2 gap-4 md:columns-3 [&>*]:mb-4">
-        {imgs.map((src, i) => (
-          <motion.button
-            key={i}
-            onClick={() => setActive(i)}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: (i % 6) * 0.06 }}
-            whileHover={{ scale: 1.02 }}
-            className="glass group relative block w-full overflow-hidden break-inside-avoid"
-          >
-            <img
-              src={src}
-              alt=""
-              loading="lazy"
-              className="w-full transition-transform duration-700 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-            <div className="absolute bottom-3 left-3 translate-y-2 text-xs uppercase tracking-[0.3em] text-soft-pink opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-              Memory #{String(i + 1).padStart(2, "0")}
-            </div>
-          </motion.button>
+        {galleryItems.map((item, i) => (
+          <GalleryCard key={i} item={item} index={i} onClick={() => setActive(i)} />
         ))}
       </div>
 
@@ -418,7 +403,7 @@ function Gallery() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              src={imgs[active]}
+              src={galleryItems[active]?.src}
               className="glow-ring max-h-[85vh] max-w-full rounded-xl object-contain"
               alt=""
             />
@@ -429,27 +414,20 @@ function Gallery() {
   );
 }
 
-function Moments() {
-  return (
-    <section className="relative z-10 mx-auto max-w-6xl px-6 py-24">
-      <Heading eyebrow="Special Moments" title="Little Dates, Big Feelings" />
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {moments.map((m, i) => (
-          <MomentCard key={m.title} moment={m} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function MomentCard({ moment, index }: { moment: (typeof moments)[number]; index: number }) {
+function GalleryCard({
+  item,
+  index,
+  onClick,
+}: {
+  item: { src: string; video?: string };
+  index: number;
+  onClick: () => void;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = () => {
-    if (videoRef.current && moment.video) {
-      videoRef.current.play().catch(() => {
-        // Auto-play might be blocked
-      });
+    if (videoRef.current && item.video) {
+      videoRef.current.play().catch(() => {});
     }
   };
 
@@ -461,22 +439,23 @@ function MomentCard({ moment, index }: { moment: (typeof moments)[number]; index
   };
 
   return (
-    <motion.div
+    <motion.button
+      onClick={onClick}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: index * 0.08 }}
-      whileHover={{ y: -8 }}
+      transition={{ duration: 0.6, delay: (index % 6) * 0.06 }}
+      whileHover={{ scale: 1.02 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="glass group relative overflow-hidden p-6"
+      className="glass group relative block w-full overflow-hidden break-inside-avoid"
     >
-      {moment.video && (
-        <div className="relative -m-6 mb-4 overflow-hidden rounded-lg bg-black/20">
+      {item.video ? (
+        <>
           <video
             ref={videoRef}
-            src={moment.video}
-            className="aspect-video w-full object-cover"
+            src={item.video}
+            className="w-full transition-transform duration-700 group-hover:scale-110"
             muted
             loop
             playsInline
@@ -486,13 +465,48 @@ function MomentCard({ moment, index }: { moment: (typeof moments)[number]; index
               <span className="text-2xl text-soft-pink">▶</span>
             </div>
           </div>
-        </div>
+        </>
+      ) : (
+        <img
+          src={item.src}
+          alt=""
+          loading="lazy"
+          className="w-full transition-transform duration-700 group-hover:scale-110"
+        />
       )}
-      <div className="text-xs uppercase tracking-[0.3em] text-rose-gold">{moment.date}</div>
-      <h3 className="text-gold mt-3 font-serif text-2xl">{moment.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{moment.text}</p>
-      <div className="heart-pulse absolute -bottom-4 -right-4 text-6xl text-soft-pink/15">♥</div>
-    </motion.div>
+      <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+      <div className="absolute bottom-3 left-3 translate-y-2 text-xs uppercase tracking-[0.3em] text-soft-pink opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+        Memory #{String(index + 1).padStart(2, "0")}
+      </div>
+    </motion.button>
+  );
+}
+
+function Moments() {
+  return (
+    <section className="relative z-10 mx-auto max-w-6xl px-6 py-24">
+      <Heading eyebrow="Special Moments" title="Little Dates, Big Feelings" />
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {moments.map((m, i) => (
+          <motion.div
+            key={m.title}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: i * 0.08 }}
+            whileHover={{ y: -8 }}
+            className="glass group relative overflow-hidden p-6"
+          >
+            <div className="text-xs uppercase tracking-[0.3em] text-rose-gold">{m.date}</div>
+            <h3 className="text-gold mt-3 font-serif text-2xl">{m.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{m.text}</p>
+            <div className="heart-pulse absolute -bottom-4 -right-4 text-6xl text-soft-pink/15">
+              ♥
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
   );
 }
 
