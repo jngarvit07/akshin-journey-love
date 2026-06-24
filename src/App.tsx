@@ -9,11 +9,9 @@ import y4 from "@/assets/y4.jpg";
 import y5 from "@/assets/y5.jpg";
 import y6 from "@/assets/y6.jpg";
 import rose from "@/assets/rose.jpg";
-import h1 from "@/assets/h1.jpg";
-import h2 from "@/assets/h2.jpg";
-import h3 from "@/assets/h3.jpg";
 import v1 from "@/assets/Videoes/v1.mp4";
 import v2 from "@/assets/Videoes/v2.mp4";
+import audio from "@/assets/Audio_1.mp3";
 
 const START = new Date("2021-06-25T00:00:00");
 const TARGET = new Date("2026-06-25T00:00:00");
@@ -336,7 +334,7 @@ function TimelineRow({ item, index }: { item: (typeof timeline)[number]; index: 
         </div>
         <h3 className="text-gold mt-2 font-serif text-3xl">{item.title}</h3>
         <p
-          className={`mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:max-w-sm ${isRight ? "md:ml-auto" : "md:mr-auto"}`}
+          className={`mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:max-w-sm ${isRight ? "md:mr-auto" : "md:ml-auto"}`}
         >
           {item.text}
         </p>
@@ -367,7 +365,6 @@ function TimelineRow({ item, index }: { item: (typeof timeline)[number]; index: 
 function Gallery() {
   const galleryItems = [
     { src: hero, video: undefined },
-    { src: h1, video: undefined },
     { src: y1, video: undefined },
     { src: y2, video: undefined },
     { src: y3, video: undefined },
@@ -686,12 +683,7 @@ function MusicPlayer() {
   };
   return (
     <div className="fixed bottom-5 right-5 z-40">
-      <audio
-        ref={ref}
-        loop
-        src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_347ca52a90.mp3?filename=romantic-piano-12241.mp3"
-        preload="none"
-      />
+      <audio ref={ref} loop src={audio} preload="none" />
       <div className="glass flex items-center gap-3 px-3 py-2 pr-4 shadow-2xl">
         <button
           onClick={toggle}
