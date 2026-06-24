@@ -62,27 +62,32 @@ const moments = [
   {
     date: "Jun 25, 2021",
     title: "First Hello",
-    text: "The day everything began.",
+    text: "The day we started talking — a simple hello that quietly changed everything.",
   },
   {
-    date: "Dec 31, 2022",
-    title: "Our First New Year",
-    text: "Midnight kisses under city lights.",
+    date: "Dec 03, 2021",
+    title: "Our First Meeting",
+    text: "Our first time together — roaming through the mall, talking endlessly, and creating memories we still smile about.",
   },
   {
-    date: "Aug 14, 2023",
-    title: "The Mountain Trip",
-    text: "Where we left our hearts above the clouds.",
+    date: "Mar 07, 2022",
+    title: "My Birthday",
+    text: "A birthday I’ll never forget — not because of gifts, but because of the promise of forever.",
   },
   {
-    date: "Feb 14, 2024",
-    title: "Letters & Roses",
-    text: "A quiet Valentine that meant everything.",
+    date: "May 22, 2022",
+    title: "Your Birthday",
+    text: "Celebrating your special day together and turning moments into memories that stay forever.",
+  },
+  {
+    date: "Jun 25, 2022",
+    title: "First Year",
+    text: "One year completed — filled with conversations, memories, laughter, and promises for all the years ahead.",
   },
   {
     date: "Jun 25, 2026",
-    title: "5 Years",
-    text: "And this is only the beginning.",
+    title: "Five Years of Us",
+    text: "Five years of love, memories, promises, challenges, and choosing each other again and again. And this is only the beginning.",
   },
 ];
 
@@ -669,7 +674,7 @@ function LoveBurst() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const images = [h1, h2, h3, y1, rose];
+  const images = [h1, h2, h3, y1];
 
   const confetti = useMemo(
     () =>
@@ -762,7 +767,7 @@ function LoveBurst() {
               {/* Circular images */}
               {images.map((img, idx) => {
                 const angle = (idx / images.length) * Math.PI * 2;
-                const radius = 160;
+                const radius = 190;
                 const x = Math.cos(angle) * radius;
                 const y = Math.sin(angle) * radius;
 
@@ -770,7 +775,7 @@ function LoveBurst() {
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    animate={{ opacity: 1, scale: 1.2 }}
                     transition={{
                       duration: 0.6,
                       delay: 0.15 + idx * 0.1,
@@ -799,7 +804,7 @@ function LoveBurst() {
               {/* Decorative hearts around */}
               {[...Array(8)].map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2;
-                const radius = 160;
+                const radius = 190;
                 const x = Math.cos(angle) * radius;
                 const y = Math.sin(angle) * radius;
 
@@ -808,7 +813,7 @@ function LoveBurst() {
                     key={`heart-${i}`}
                     className="absolute text-2xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                     style={{ x, y }}
-                    animate={{ scale: [1, 1.3, 1] }}
+                    animate={{ scale: [1.2, 1.4, 1.2] }}
                     transition={{
                       duration: 1.5,
                       repeat: Infinity,
