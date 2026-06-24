@@ -298,6 +298,36 @@
 .flip {
   perspective: 1200px;
 }
+
+/* Love Burst Animations */
+@keyframes burst-confetti {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx, 100px), var(--ty, -100px)) rotate(var(--rotation, 360deg));
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-heart {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.burst-confetti {
+  animation: burst-confetti 1.8s ease-out forwards;
+}
+
+.pulse-heart {
+  animation: pulse-heart 2s ease-in-out infinite;
+}
 .flip-inner {
   position: relative;
   width: 100%;

@@ -9,6 +9,9 @@ import y4 from "@/assets/y4.jpg";
 import y5 from "@/assets/y5.jpg";
 import y6 from "@/assets/y6.jpg";
 import rose from "@/assets/rose.jpg";
+import h1 from "@/assets/h1.jpg";
+import h2 from "@/assets/h2.jpg";
+import h3 from "@/assets/h3.jpg";
 import v1 from "@/assets/Videoes/v1.mp4";
 import v2 from "@/assets/Videoes/v2.mp4";
 import audio from "@/assets/Audio_1.mp3";
@@ -20,37 +23,37 @@ const timeline = [
   {
     year: "2021",
     title: "The Beginning",
-    text: "Two strangers, one sunset, a thousand quiet sparks. Where it all started.",
+    text: "That was the day we started talking. At first, we were just close friends, spending hours chatting and sharing little moments. And then there were the terrace and meeting moments — saying everything with just our eyes and no words at all. Somehow, those quiet moments became some of the best memories and among the happiest parts of my life. Where it all started.",
     img: y1,
   },
   {
     year: "2022",
     title: "Growing Together",
-    text: "Late-night talks, golden walks, learning the language only we speak.",
+    text: "By this year, we had become more than close friends — something difficult to define, somewhere between friendship and love. We stayed committed to each other even before giving it a name. Then one day came when we finally said it and decided to be together. From that moment, we made promises for our future and started our journey in love — not as strangers anymore, but as two hearts choosing each other.",
     img: y2,
   },
   {
     year: "2023",
     title: "Our Adventures",
-    text: "New cities, mountain air, and a map we kept rewriting with every trip.",
+    text: "This was the year of us — committed, happy, and making memories in every little moment. From the hanging bridge to quiet moments by the Chambal River, every place became special because we were together. Life kept moving, the world kept changing, but through it all, holding onto each other became our greatest adventure.",
     img: y3,
   },
   {
     year: "2024",
-    title: "Becoming Stronger",
-    text: "Through every storm, we found shelter in each other. Always.",
+    title: "Stronger Than the Storm",
+    text: "This year was one of the most eventful and challenging chapters of our story. We faced lows, difficult moments, and more challenges than we expected, but through every problem, we stayed by each other’s side. There were days that felt heavy and uncertain, yet we never let those moments break us. Instead, they brought us closer, taught us patience, and reminded us why we chose each other. If this year gave us anything, it was proof that our love became stronger because we stayed together through the storms.",
     img: y4,
   },
   {
     year: "2025",
-    title: "The Beginning of Always",
-    text: "A year of discovering each other deeper, creating memories, and turning moments into something unforgettable.",
+    title: "Choosing Us, Every Day",
+    text: "2025 was a beautiful chapter in its own way. It was not perfect and it came with challenges, but it gave us something more valuable — time together. We shared countless moments, long conversations, quiet nights, laughter, and memories that made ordinary days feel special. While moving forward with our ambitions and building our own paths, we never stopped choosing each other. Through every promise we kept and every challenge we faced, we continued to grow. This year reminded us that happiness isn’t perfection — it’s having each other while moving forward and rising together.",
     img: y5,
   },
   {
     year: "2026",
-    title: "Forever, In Progress",
-    text: "Promises whispered, dreams shared, a future we are quietly building.",
+    title: "Five Chapters, Forever to Go",
+    text: "This is the year we complete five years of our journey — five years of memories, promises, growth, love, and choosing each other again and again. Looking back, we created so many beautiful moments together and built a relationship filled with stories that will always stay with us. The past few months were not easy for us. We had difficult days, moments of distance, misunderstandings, and times when it felt like we were losing each other. We broke apart in moments, but somehow, we always found our way back. Because beyond everything, we learned to understand each other more deeply. Sometimes I made mistakes, sometimes you did — but through it all, we remained not only partners, but friends, companions, and people who still see a future together. This year reminded me that love is not about never falling; it is about holding on and growing through every season. As we complete these five chapters of our story, I promise to keep choosing us, to keep building our future together, and to stay beside you through every high and every low. You are a huge part of my world, and I hope I remain a part of yours. Here’s to everything we have lived, everything we survived, and everything we still have left to write together.",
     img: y6,
   },
 ];
@@ -95,6 +98,7 @@ function App() {
       <Moments />
       <Stats />
       <Letter />
+      <LoveBurst />
       <MusicPlayer />
       <FinalSection />
       <footer className="relative z-10 py-10 text-center text-xs text-muted-foreground">
@@ -656,6 +660,180 @@ function Letter() {
           </motion.div>
         )}
       </div>
+    </section>
+  );
+}
+
+function LoveBurst() {
+  const [burst, setBurst] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const images = [h1, h2, h3, rose];
+
+  const confetti = useMemo(
+    () =>
+      Array.from({ length: 40 }, (_, i) => ({
+        key: i,
+        left: Math.random() * 100,
+        delay: Math.random() * 0.3,
+        dur: 1.8 + Math.random() * 0.8,
+        dx: (Math.random() - 0.5) * 400 + "px",
+        dy: -(50 + Math.random() * 300) + "px",
+        rotation: Math.random() * 720,
+      })),
+    [],
+  );
+
+  return (
+    <section className="relative z-10 mx-auto max-w-6xl px-6 py-24 text-center">
+      <Heading eyebrow="A Special Moment" title="For You" />
+
+      <div className="mt-12 flex justify-center">
+        <motion.button
+          onClick={() => setBurst(true)}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          className="glow-ring rounded-full border border-rose-gold/50 bg-background/40 px-8 py-4 text-lg font-serif italic tracking-wide backdrop-blur-md transition-colors hover:bg-rose-gold/20"
+        >
+          💝 Click For A Surprise 💝
+        </motion.button>
+      </div>
+
+      <AnimatePresence>
+        {burst && (
+          <motion.div
+            key="burst-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setBurst(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-lg"
+          >
+            {/* Confetti burst */}
+            {mounted &&
+              confetti.map((c) => (
+                <motion.div
+                  key={c.key}
+                  initial={{ x: 0, y: 0, opacity: 1, rotate: 0 }}
+                  animate={{
+                    x: c.dx,
+                    y: c.dy,
+                    opacity: 0,
+                    rotate: c.rotation,
+                  }}
+                  transition={{
+                    duration: c.dur,
+                    delay: c.delay,
+                    ease: "easeOut",
+                  }}
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                  style={{
+                    background: ["#d4af8c", "#f8c8dc", "#f8f2ea", "#d4af8c"][c.key % 4],
+                  }}
+                />
+              ))}
+
+            {/* Circle of images with I love you text */}
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative h-72 w-72 sm:h-96 sm:w-96"
+            >
+              {/* Center text */}
+              <motion.div
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <div className="text-center">
+                  <h2 className="font-serif text-4xl sm:text-5xl font-light text-soft-pink mb-2">
+                    I Love You
+                  </h2>
+                  <p className="text-sm tracking-widest text-rose-gold uppercase">
+                    ♥ Forever & Always ♥
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Circular images */}
+              {images.map((img, idx) => {
+                const angle = (idx / images.length) * Math.PI * 2;
+                const radius = 110;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.15 + idx * 0.1,
+                      type: "spring",
+                      stiffness: 100,
+                    }}
+                    className="absolute w-24 h-24 sm:w-28 sm:h-28 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                    style={{ x, y }}
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <motion.img
+                      src={img}
+                      alt=""
+                      className="glow-ring h-full w-full rounded-full object-cover border-2 border-rose-gold/40 shadow-lg"
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    />
+                  </motion.div>
+                );
+              })}
+
+              {/* Decorative hearts around */}
+              {[...Array(8)].map((_, i) => {
+                const angle = (i / 8) * Math.PI * 2;
+                const radius = 160;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+
+                return (
+                  <motion.div
+                    key={`heart-${i}`}
+                    className="absolute text-2xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                    style={{ x, y }}
+                    animate={{ scale: [1, 1.3, 1] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      delay: i * 0.1,
+                    }}
+                  >
+                    ♥
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center"
+            >
+              <p className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+                Click anywhere to close
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
